@@ -15,6 +15,7 @@ public class AC6 extends AppCompatActivity {
         setContentView(R.layout.activity_a_c6);
 
         //Naveen updated the Git-AC6
+        //Saroj updated the Git-AC6
 
         final Button go_back_ac3 = findViewById(R.id.go_back_ac3);
         go_back_ac3.setOnClickListener(new View.OnClickListener() {
