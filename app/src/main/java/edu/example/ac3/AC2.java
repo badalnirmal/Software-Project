@@ -34,8 +34,84 @@ public class AC2 extends AppCompatActivity {
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     FirebaseDatabase database= FirebaseDatabase.getInstance();
     DatabaseReference mDatabase= database.getReference(USERS);
-
+    private Boolean validateFName()
+    {
+        String val=reg_fname.getEditText().getText().toString();
+        if(val.isEmpty())
+        {
+            reg_fname.setError("Field cannot be empty");
+            return false;
+        }
+        else {
+            reg_fname.setError(null);
+            return true;
+        }
+    }
+    private Boolean validateLName()
+    {
+        String val=reg_lname.getEditText().getText().toString();
+        if(val.isEmpty())
+        {
+            reg_lname.setError("Field cannot be empty");
+            return false;
+        }
+        else {
+            reg_lname.setError(null);
+            return true;
+        }
+    }
+    private Boolean validateEmail()
+    {
+        String val=reg_email.getEditText().getText().toString();
+        String emailpattern="[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(val.isEmpty())
+        {
+            reg_email.setError("Field cannot be empty");
+            return false;
+        }
+        else if(!val.matches(emailpattern))
+        {
+            reg_email.setError("Invalid email");
+            return false;
+        }
+        else {
+            reg_email.setError(null);
+            return true;
+        }
+    }
+    private Boolean validatPhone()
+    {
+        String val=reg_phone.getEditText().getText().toString();
+        if(val.isEmpty())
+        {
+            reg_phone.setError("Field cannot be empty");
+            return false;
+        }
+        else if(!val.matches("[0-9]{10}"))
+        {
+            reg_phone.setError("Invalid Phone");
+            return false;
+        }
+        else {
+            reg_phone.setError(null);
+            return true;
+        }
+    }
+    private Boolean validatePassword()
+    {
+        String val=reg_password.getEditText().getText().toString();
+        if(val.isEmpty())
+        {
+            reg_password.setError("Field cannot be empty");
+            return false;
+        }
+        else {
+            reg_password.setError(null);
+            return true;
+        }
+    }
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a_c2);
@@ -48,6 +124,9 @@ public class AC2 extends AppCompatActivity {
         con_password=findViewById(R.id.confirm_password);
         regBtn=findViewById(R.id.signup);
         regtologinbtn=findViewById(R.id.tologin);
+
+
+
 
         regBtn.setOnClickListener(new android.view.View.OnClickListener(){
 
@@ -62,10 +141,13 @@ public class AC2 extends AppCompatActivity {
                 String phone=reg_phone.getEditText().getText().toString();
                 String password=reg_password.getEditText().getText().toString();
                 String confirm_password=con_password.getEditText().getText().toString();
-                if(email.isEmpty())
+                if(!validateFName()||!validateLName()||!validateEmail()||!validatPhone()||!validatePassword())
                 {
-                    reg_email.setError("Please enter an email ID");
-                    reg_email.requestFocus();
+                    return;
+                }
+                else if(!password.equals(confirm_password))
+                {
+                    Toast.makeText(AC2.this,"Password not matching",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -92,6 +174,8 @@ public class AC2 extends AppCompatActivity {
             }
         });
     }
+
+
     public void registerUser(String email, String pwd)
     {
         fAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
