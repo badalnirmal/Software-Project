@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="curr_types">
-        <item></item>
-        <item>USD</item>
-        <item>Chinese Yuan</item>
-        <item>Euro</item>
-        <item>Pound</item>
-        <item>Ruppees</item>
-    </string-array>
+
 </resources>

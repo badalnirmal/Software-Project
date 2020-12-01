@@ -42,8 +42,7 @@
                 android:id="@+id/user_fname"
                 android:layout_width="317dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="Welcome User" />
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/logout"

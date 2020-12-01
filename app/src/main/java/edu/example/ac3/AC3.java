@@ -105,8 +105,11 @@ public class AC3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!drop_down1_choice[0].equals(drop_down2_choice[0])) {
-                    Intent intent = new Intent(AC3.this, AC6.class);//AC4 is banks listing page(change AC6 to AC4)
-                    //check for the activity name for login activity and replace AC1.class
+                    Intent intent = new Intent(AC3.this, AC4.class);//AC4 is banks listing page(change AC6 to AC4)
+                    Bank bank = new Bank();
+                    bank.curr_from = drop_down1_choice[0];
+                    bank.curr_to = drop_down2_choice[0];
+                    intent.putExtra("bank object with curr from and curr to", bank);
                     startActivity(intent);
                 }
                 else
@@ -122,7 +125,6 @@ public class AC3 extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(AC3.this,AC6.class);//AC6 is Customer Support
-                //check for the activity name for login activity and replace AC1.class
                 startActivity(intent);
             }
         });
