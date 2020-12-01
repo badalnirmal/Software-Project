@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -24,46 +25,39 @@ public class AC4 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a_c4);
-
-        /*Getting location of user*/
-        final double[] latitude = new double[1];
-        final double[] longitude = new double[1];
+        final TextView try_text = findViewById(R.id.textView3);
+        //Starting the Fused location object to get the user location
         FusedLocationProviderClient fusedLocationClient;
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        /*######################### Code below is self created by Andorid Studio*/
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(AC4.this);
+        //Check if user is allowed the location access, if not get location access from the user
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            ActivityCompat.requestPermissions((Activity) AC4.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
 
-        //We need to check what to do if the device is unable to locate ####################################
+        //Once permissions are set, the app is able to get last known location that any other apps have accessed from the device or any last known recorded location of the app
+        // if there is no last known location the app crashes and returns null
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            // Logic to handle location object
-                            latitude[0] = location.getLatitude();
-                            longitude[0] = location.getLongitude();
-
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            // use this location to call the get places api
                         }
                         else
                         {
-
+                            //here create a toast token if the location cannot be located
                         }
+
                     }
                 });
 
+        //Getting the curr_from and curr_to strings that user has selected from the previous activity
         Intent intent= getIntent();
         Bank bank= (Bank)intent.getSerializableExtra("bank object with curr from and curr to");
 
+        //Sort by Spinner to sort by the selected method
         final CharSequence[] sort_types = {"Distance","Service Charge"};
         final Spinner sorting_method = findViewById(R.id.sorting_method);
         ArrayAdapter<CharSequence> adapter1 = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,sort_types);

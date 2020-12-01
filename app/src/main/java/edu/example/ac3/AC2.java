@@ -89,7 +89,7 @@ public class AC2 extends AppCompatActivity {
         }
         else if(!val.matches("[0-9]{10}"))
         {
-            reg_phone.setError("Invalid Phone");
+            reg_phone.setError("Invalid Phone- Must be 10 digit");
             return false;
         }
         else {
