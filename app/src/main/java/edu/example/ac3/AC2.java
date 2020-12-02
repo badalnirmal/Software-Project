@@ -79,7 +79,7 @@ public class AC2 extends AppCompatActivity {
             return true;
         }
     }
-    private Boolean validatPhone()
+    private Boolean validatePhone()
     {
         String val=reg_phone.getEditText().getText().toString();
         if(val.isEmpty())
@@ -107,6 +107,20 @@ public class AC2 extends AppCompatActivity {
         }
         else {
             reg_password.setError(null);
+            return true;
+        }
+    }
+    private Boolean match_password()
+    {
+        String val=reg_password.getEditText().getText().toString();
+        String val1=con_password.getEditText().getText().toString();
+        if(!val.equals(val1))
+        {
+            con_password.setError("Password did not match");
+            return false;
+        }
+        else{
+            con_password.setError(null);
             return true;
         }
     }
@@ -141,14 +155,11 @@ public class AC2 extends AppCompatActivity {
                 String phone=reg_phone.getEditText().getText().toString();
                 String password=reg_password.getEditText().getText().toString();
                 String confirm_password=con_password.getEditText().getText().toString();
-                if(!validateFName()||!validateLName()||!validateEmail()||!validatPhone()||!validatePassword())
+                if(!validateFName()||!validateLName()||!validateEmail()||!validatePhone()||!validatePassword()||!match_password())
                 {
                     return;
                 }
-                else if(!password.equals(confirm_password))
-                {
-                    Toast.makeText(AC2.this,"Password not matching",Toast.LENGTH_SHORT).show();
-                }
+
                 else
                 {
                     /*TRY THIS#############################################################################################*/
