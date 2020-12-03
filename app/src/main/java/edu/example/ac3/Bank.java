@@ -6,3 +6,4 @@ public class Bank implements Serializable {
     String curr_from;
     String curr_to;
 }
+
