@@ -69,7 +69,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_banks"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="219dp"
+                android:layout_weight="1">
 
             </androidx.recyclerview.widget.RecyclerView>
 

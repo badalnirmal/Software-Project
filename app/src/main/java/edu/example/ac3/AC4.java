@@ -1,6 +1,9 @@
 package edu.example.ac3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -49,7 +52,18 @@ This code is here to test the import from intent as it gets added to the banks_f
             System.out.println(banks_final.get(i).getCurr_from());
             System.out.println(banks_final.get(i).getDistance());
         }
+
+
 */
+        System.out.println(banks.size());
+        if(banks.size()!= 0) {
+            RecyclerView rvBanks = findViewById(R.id.list_banks);
+
+            BankAdapter adapter = new BankAdapter(banks_final);
+
+            rvBanks.setAdapter(adapter);
+            rvBanks.setLayoutManager(new LinearLayoutManager(this));
+        }
         //Sort by Spinner to sort by the selected method
         final CharSequence[] sort_types = {"Distance","Service Charge"};
         final Spinner sorting_method = findViewById(R.id.sorting_method);
