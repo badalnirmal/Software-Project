@@ -24,20 +24,32 @@ public class AC4 extends AppCompatActivity {
         //Getting the curr_from and curr_to strings that user has selected from the previous activity
         Intent intent= getIntent();
         ArrayList<Bank1> banks = (ArrayList<Bank1>) intent.getSerializableExtra("bank object arraylist");
+        String currency_from = (String) intent.getSerializableExtra("curr_from_string");
+        String currency_to = (String) intent.getSerializableExtra("curr_to_string");
         ArrayList<Bank1> banks_final = new ArrayList<>();
 
         //System.out.println(banks.size());
-        for (int i=0 ;i<banks.size();i++)
-        {
-            if(banks.get(i).getDistance()!=null)
+        for (int i=0 ;i<banks.size();i++) {
+            if (banks.get(i).getDistance() != null) {
                 banks_final.add(banks.get(i));
+                banks_final.get(i).setCurr_from_s(currency_from);
+                banks_final.get(i).setCurr_to_s(currency_to);
+            }
         }
+/*
+This code is here to test the import from intent as it gets added to the banks_final array
+        System.out.println(banks_final.size());
         for (int i=0 ;i<banks_final.size();i++)
         {
-            System.out.println(banks.get(i).getB_name());
-            System.out.println(banks.get(i).getDistance());
+            System.out.println(banks_final.get(i).getB_name());
+            System.out.println(banks_final.get(i).getSer_charge());
+            System.out.println(banks_final.get(i).getCurr_to_s());
+            System.out.println(banks_final.get(i).getCurr_to());
+            System.out.println(banks_final.get(i).getCurr_from_s());
+            System.out.println(banks_final.get(i).getCurr_from());
+            System.out.println(banks_final.get(i).getDistance());
         }
-
+*/
         //Sort by Spinner to sort by the selected method
         final CharSequence[] sort_types = {"Distance","Service Charge"};
         final Spinner sorting_method = findViewById(R.id.sorting_method);
@@ -66,7 +78,6 @@ public class AC4 extends AppCompatActivity {
         go_back_ac3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(AC4.this,AC3.class);//Should go back to AC3
                 startActivity(intent);
             }
@@ -75,7 +86,3 @@ public class AC4 extends AppCompatActivity {
     }
 
 }
-//http://maps.googleapis.com/maps/api/distancematrix/json?origins=27.7048067,85.3074633&destinations=27.6973423,85.2988963&mode=walking&key=AIzaSyBQ4rRPlNEWHxxh8yW8dnef-AmIqNr-_1o
-//String dis_url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+latitude+","+longitude+
-//                            "&destinations="+lat+","+lng+
-//                            "&mode=walking&key=AIzaSyBQ4rRPlNEWHxxh8yW8dnef-AmIqNr-_1o";

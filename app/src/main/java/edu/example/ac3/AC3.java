@@ -163,6 +163,8 @@ public class AC3 extends AppCompatActivity {
                             });
                     Intent intent = new Intent(AC3.this, AC4.class);//AC4 is banks listing page(change AC6 to AC4)
                     intent.putExtra("bank object arraylist", list_of_banks);
+                    intent.putExtra("curr_from_string",drop_down1_choice[0] );
+                    intent.putExtra("curr_to_string", drop_down2_choice[0]);
                     startActivity(intent);
                     for(int i=0; i<distance.size();i++)
                     {
@@ -354,3 +356,7 @@ public class AC3 extends AppCompatActivity {
     }
 
 }
+//http://maps.googleapis.com/maps/api/distancematrix/json?origins=27.7048067,85.3074633&destinations=27.6973423,85.2988963&mode=walking&key=AIzaSyBQ4rRPlNEWHxxh8yW8dnef-AmIqNr-_1o
+//String dis_url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+latitude+","+longitude+
+//                            "&destinations="+lat+","+lng+
+//                            "&mode=walking&key=AIzaSyBQ4rRPlNEWHxxh8yW8dnef-AmIqNr-_1o";
