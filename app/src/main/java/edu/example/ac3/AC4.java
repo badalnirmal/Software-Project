@@ -1,62 +1,55 @@
 package edu.example.ac3;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+import java.util.ArrayList;
 
 public class AC4 extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a_c4);
         final TextView try_text = findViewById(R.id.textView3);
-        //Starting the Fused location object to get the user location
-        FusedLocationProviderClient fusedLocationClient;
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(AC4.this);
-        //Check if user is allowed the location access, if not get location access from the user
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) AC4.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-        }
-
-        //Once permissions are set, the app is able to get last known location that any other apps have accessed from the device or any last known recorded location of the app
-        // if there is no last known location the app crashes and returns null
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            double latitude = location.getLatitude();
-                            double longitude = location.getLongitude();
-                            // use this location to call the get places api
-                        }
-                        else
-                        {
-                            //here create a toast token if the location cannot be located
-                        }
-
-                    }
-                });
 
         //Getting the curr_from and curr_to strings that user has selected from the previous activity
         Intent intent= getIntent();
-        Bank bank= (Bank)intent.getSerializableExtra("bank object with curr from and curr to");
+        ArrayList<Bank1> banks = (ArrayList<Bank1>) intent.getSerializableExtra("bank object arraylist");
+        String currency_from = (String) intent.getSerializableExtra("curr_from_string");
+        String currency_to = (String) intent.getSerializableExtra("curr_to_string");
+        ArrayList<Bank1> banks_final = new ArrayList<>();
 
+        //System.out.println(banks.size());
+        for (int i=0 ;i<banks.size();i++) {
+            if (banks.get(i).getDistance() != null) {
+                banks_final.add(banks.get(i));
+                banks_final.get(i).setCurr_from_s(currency_from);
+                banks_final.get(i).setCurr_to_s(currency_to);
+            }
+        }
+/*
+This code is here to test the import from intent as it gets added to the banks_final array
+        System.out.println(banks_final.size());
+        for (int i=0 ;i<banks_final.size();i++)
+        {
+            System.out.println(banks_final.get(i).getB_name());
+            System.out.println(banks_final.get(i).getSer_charge());
+            System.out.println(banks_final.get(i).getCurr_to_s());
+            System.out.println(banks_final.get(i).getCurr_to());
+            System.out.println(banks_final.get(i).getCurr_from_s());
+            System.out.println(banks_final.get(i).getCurr_from());
+            System.out.println(banks_final.get(i).getDistance());
+        }
+*/
         //Sort by Spinner to sort by the selected method
         final CharSequence[] sort_types = {"Distance","Service Charge"};
         final Spinner sorting_method = findViewById(R.id.sorting_method);
@@ -80,5 +73,16 @@ public class AC4 extends AppCompatActivity {
             }
 
         });
+
+        final Button go_back_ac3 = findViewById(R.id.go_back_ac3);
+        go_back_ac3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AC4.this,AC3.class);//Should go back to AC3
+                startActivity(intent);
+            }
+        });
+
     }
+
 }
