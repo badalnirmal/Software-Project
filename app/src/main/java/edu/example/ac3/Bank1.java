@@ -1,10 +1,12 @@
 package edu.example.ac3;
 
-public class Bank1 extends Bank{
+import java.io.Serializable;
+
+public class Bank1 extends Bank implements Serializable {
         private
     String b_name;
     double ser_charge;
-    double distance;
+    String distance;
     double curr_from;
     double curr_to;
 
@@ -16,7 +18,7 @@ public class Bank1 extends Bank{
                 return ser_charge;
         }
 
-        public double getDistance() {
+        public String getDistance() {
                 return distance;
         }
 
@@ -32,7 +34,7 @@ public class Bank1 extends Bank{
                 this.b_name = b_name;
         }
 
-        public void setDistance(double distance) {
+        public void setDistance(String distance) {
                 this.distance = distance;
         }
 
