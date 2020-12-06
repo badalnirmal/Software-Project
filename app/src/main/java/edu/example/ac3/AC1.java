@@ -23,6 +23,7 @@ public class AC1 extends AppCompatActivity {
     private EditText Password;
     private Button Login;
     private Button Sign_up;
+
     FirebaseAuth firebaseAuth;
 
     @Override

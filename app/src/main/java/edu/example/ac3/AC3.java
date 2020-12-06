@@ -115,6 +115,7 @@ public class AC3 extends AppCompatActivity {
 
 
         final Button show_banks = findViewById(R.id.show_banks);
+
         show_banks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,6 +266,7 @@ public class AC3 extends AppCompatActivity {
                 bank.setB_name(name);
                 bank.setSer_charge(200.00);//Check this value for all banks
                 list_of_banks.add(bank);
+
                 //Here feed the datas to the bank1 object and then put it in arraylist**************************************************************************************
                 //Or return the received datas back to the line 74**********************************************************************************************************
 
@@ -273,6 +275,7 @@ public class AC3 extends AppCompatActivity {
                         "&mode=walking&key=AIzaSyBQ4rRPlNEWHxxh8yW8dnef-AmIqNr-_1o";
                 //System.out.println(dis_url);
                 new DisTask().execute(dis_url);
+
                 //Calls Line 204
             }
         }

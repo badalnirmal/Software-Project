@@ -1,6 +1,7 @@
 package edu.example.ac3;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
         textView.setText(bank.getB_name());
         Button button = holder.selectbank;
         button.setText("Select Bank");
+
     }
 
 
