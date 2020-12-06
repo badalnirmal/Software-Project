@@ -18,7 +18,7 @@ public class AC6 extends AppCompatActivity {
         go_back_ac3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AC6.this,AC5.class);//Should go back to AC3
+                Intent intent = new Intent(AC6.this,AC3.class);//Should go back to AC3
                 startActivity(intent);
             }
         });

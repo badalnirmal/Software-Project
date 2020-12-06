@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
+public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
 
     private ArrayList<Bank1> banklist;
 
-    public BankAdapter(ArrayList<Bank1> banks_final) {
+    public BankAdapter (ArrayList<Bank1> banks_final) {
         banklist = banks_final;
     }
 
@@ -29,7 +30,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
 
         View bankview = inflater.inflate(R.layout.item_bank,parent,false);
 
-        ViewHolder viewHolder = new ViewHolder(bankview);
+        ViewHolder viewHolder = new ViewHolder(context,bankview);
 
         return viewHolder;
     }
@@ -40,7 +41,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
         Bank1 bank = banklist.get(position);
 
         TextView textView = holder.bankname;
-        textView.setText(bank.getB_name());
+        textView.setText(String.format("%s\n%s away. \n", bank.getB_name(), bank.getDistance()));
         Button button = holder.selectbank;
         button.setText("Select Bank");
 
@@ -52,17 +53,32 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
         return banklist.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView bankname;
         public Button selectbank;
-
-
-        public ViewHolder(View itemView){
+        private Context context;
+        public ViewHolder(Context context,View itemView){
             super(itemView);
-
             bankname = itemView.findViewById(R.id.bank_name);
             selectbank = itemView.findViewById(R.id.bank_select);
+            this.context = context;
+            itemView.setOnClickListener(this);//set the parameter to this if don't work
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            int pos = getLayoutPosition();//Try get adapter posittion if dont work
+            if(pos!= RecyclerView.NO_POSITION) {
+                Bank1 bank_final= banklist.get(pos);
+                Toast.makeText(context,String.valueOf(banklist.get(pos)),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,bank_final.getB_name(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,AC5.class);
+                intent.putExtra("bank_final",bank_final);
+                context.startActivity(intent);
+            }
 
         }
     }
+
 }

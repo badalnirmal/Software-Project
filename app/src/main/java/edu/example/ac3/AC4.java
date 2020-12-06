@@ -63,6 +63,9 @@ This code is here to test the import from intent as it gets added to the banks_f
 
             rvBanks.setAdapter(adapter);
             rvBanks.setLayoutManager(new LinearLayoutManager(this));
+            rvBanks.getChildAt(0);
+            rvBanks.getContext();
+
         }
         //Sort by Spinner to sort by the selected method
         final CharSequence[] sort_types = {"Distance","Service Charge"};
@@ -93,14 +96,6 @@ This code is here to test the import from intent as it gets added to the banks_f
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AC4.this,AC3.class);//Should go back to AC3
-                startActivity(intent);
-            }
-        });
-        final Button conversion= findViewById(R.id.conversion);
-        conversion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AC4.this,AC5.class);//Should go back to AC3
                 startActivity(intent);
             }
         });
