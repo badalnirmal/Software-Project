@@ -35,7 +35,7 @@ public class AC5 extends AppCompatActivity {
         String from_s = (String) getIntent().getSerializableExtra("from_s");
         String to_s = (String) getIntent().getSerializableExtra("to_s");
 
-        System.out.println(bank_final.getB_name()+" "+bank_final.getCurr_from() + from_s);
+        //System.out.println(bank_final.getB_name()+" "+bank_final.getCurr_from() + from_s);
         bank_details.setText(String.format("%s\n%s away.\n%.2f %s -> %.2f %s",
                 bank_final.getB_name(), bank_final.getDistance(),
                 bank_final.curr_from,from_s,
@@ -67,7 +67,7 @@ public class AC5 extends AppCompatActivity {
             double amount= parseInt(Amount_to_convert.getText().toString());
 
             double conversionrate = bank_final.getCurr_to();
-            System.out.println(bank_final.getCurr_to());
+            //System.out.println(bank_final.getCurr_to());
             double result=amount*conversionrate;
             Converted_Amount.setText(String.valueOf(result));
 

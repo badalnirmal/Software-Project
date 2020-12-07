@@ -25,7 +25,7 @@ public class ContactDiffCallback extends DiffUtil.Callback {
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
         // add a unique ID property on Contact and expose a getId() method
-        return mOldList.get(oldItemPosition).getB_name() == mNewList.get(newItemPosition).getB_name();
+        return mOldList.get(oldItemPosition).getSer_charge() == mNewList.get(newItemPosition).getSer_charge();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ContactDiffCallback extends DiffUtil.Callback {
         Bank1 oldContact = mOldList.get(oldItemPosition);
         Bank1 newContact = mNewList.get(newItemPosition);
 
-        if (oldContact.getDistance() == newContact.getDistance()) {
+        if (oldContact.getB_name() == newContact.getB_name() && oldContact.getDistance() == newContact.getDistance() && oldContact.getSer_charge() == newContact.getSer_charge()){
             return true;
         }
         return false;

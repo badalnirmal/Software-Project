@@ -2,14 +2,10 @@ package edu.example.ac3;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -23,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Random;
 
 public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
 
@@ -51,9 +47,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
         Bank1 bank = banklist.get(position);
 
         TextView textView = holder.bankname;
-        textView.setText(String.format("%s\n%s away. \n", bank.getB_name(), bank.getDistance()));
-        Button button = holder.selectbank;
-        button.setText("Select Bank");
+        textView.setText(String.format("%s\n%s away. \nService Charge: NRS.%s\n", bank.getB_name(), bank.getDistance(),bank.getSer_charge()));
 
     }
 
@@ -63,7 +57,10 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
         return banklist.size();
     }
 
+
+    //Swap Items here to take care of sorting and updating recyclerview
     public void swapItems(ArrayList<Bank1> contacts) {
+
         // compute diffs
         final ContactDiffCallback diffCallback = new ContactDiffCallback(this.banklist, contacts);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -75,14 +72,16 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
         diffResult.dispatchUpdatesTo(this); // calls adapter's notify methods after diff is computed
     }
 
+
+
+
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView bankname;
-        public Button selectbank;
         private Context context;
         public ViewHolder(Context context,View itemView){
             super(itemView);
             bankname = itemView.findViewById(R.id.bank_name);
-            selectbank = itemView.findViewById(R.id.bank_select);
             this.context = context;
             itemView.setOnClickListener(this);//set the parameter to this if don't work
 

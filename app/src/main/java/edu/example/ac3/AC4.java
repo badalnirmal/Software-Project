@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AC4 extends AppCompatActivity {
 
@@ -39,6 +40,9 @@ public class AC4 extends AppCompatActivity {
                 banks_final.get(i).setCurr_to_s(currency_to);
             }
         }
+
+        QuickSort qsu = new QuickSort(banks_final);
+        qsu.startQuickStart(0, banks_final.size()-1);
 /*
 This code is here to test the import from intent as it gets added to the banks_final array
         System.out.println(banks_final.size());
@@ -55,7 +59,7 @@ This code is here to test the import from intent as it gets added to the banks_f
 
 
 */
-        System.out.println(banks.size());
+        //System.out.println(banks.size());
         RecyclerView rvBanks = findViewById(R.id.list_banks);
 
         final BankAdapter adapter = new BankAdapter(banks_final);
@@ -116,5 +120,85 @@ This code is here to test the import from intent as it gets added to the banks_f
         });
 
     }
+
+    private static class QuickSort {
+        private static ArrayList<Bank1> inputArray = new ArrayList<Bank1>();
+
+        public QuickSort(ArrayList<Bank1> inputArray){
+            this.inputArray = inputArray;
+        }
+
+        public void startQuickStart(int start,int end){
+            int q;
+            if(start<end){
+                q = partition(start, end);
+                startQuickStart(start, q);
+                startQuickStart(q+1, end);
+            }
+        }
+
+        public ArrayList<Bank1> getSortedArray(){
+            return QuickSort.inputArray;
+        }
+
+        int partition(int start,int end){
+            //System.out.println("\n---------Iteration Starts----------");
+            //System.out.println("\nSorting Window from index number:"+start+" to "+end);
+
+            int init = start;
+            int length = end;
+
+            Random r = new Random();
+            int pivotIndex = nextIntInRange(start,end,r);
+            double pivot = inputArray.get(pivotIndex).getSer_charge();
+
+            //System.out.println("Pivot Element "+pivot+" at index:"+pivotIndex);
+
+            while(true){
+                while(inputArray.get(length).getSer_charge() > pivot && length>start){
+                    length--;
+                }
+
+                while(inputArray.get(length).getSer_charge() < pivot && init<end){
+                    init++;
+                }
+
+                if(init<length){
+                    Bank1 temp;
+                    temp = inputArray.get(init);
+                    inputArray.set(init,inputArray.get(length));
+                    inputArray.set(length,temp);
+                    length--;
+                    init++;
+
+                    //System.out.println("\nAfter Swapping");
+                    for(int i=start;i<=end;i++){
+                        System.out.print(inputArray.get(i)+" ");
+                    }
+                }else{
+                    //System.out.println("\n---------Iteration Ends---------");
+                    return length;
+                }
+            }
+
+        }
+
+        // Below method is to just find random integer from given range
+        static int nextIntInRange(int min, int max, Random rng) {
+            if (min > max) {
+                throw new IllegalArgumentException("Cannot draw random int from invalid range [" + min + ", " + max + "].");
+            }
+            int diff = max - min;
+            if (diff >= 0 && diff != Integer.MAX_VALUE) {
+                return (min + rng.nextInt(diff + 1));
+            }
+            int i;
+            do {
+                i = rng.nextInt();
+            } while (i < min || i > max);
+            return i;
+        }
+    }
+
 
 }
