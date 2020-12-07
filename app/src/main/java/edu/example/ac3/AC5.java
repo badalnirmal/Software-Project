@@ -29,6 +29,14 @@ public class AC5 extends AppCompatActivity {
         Go_Back = (Button) findViewById(R.id.go_back);
         Return_Homepage = (Button) findViewById(R.id.return_homepage);
 
+        TextView bank_details = findViewById(R.id.bank_details);
+        Bank1 bank_final = (Bank1) getIntent().getSerializableExtra("bank_final");
+        System.out.println(bank_final.getB_name()+" "+bank_final.getCurr_from_s());
+        bank_details.setText(String.format("%s\n%s away.\n%f %s -> %f %s",
+                bank_final.getB_name(), bank_final.getDistance(),
+                bank_final.curr_from,bank_final.curr_from_s,
+                bank_final.curr_to,bank_final.curr_to_s));
+
         //moving back to page 4
         Go_Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,11 +57,11 @@ public class AC5 extends AppCompatActivity {
     }
     void converttocurr()
     {
-
         try{
             Amount_to_convert = (EditText) findViewById(R.id.conversion) ;
             Converted_Amount = (EditText) findViewById(R.id.converted_amount);
             double amount= parseInt(Amount_to_convert.getText().toString());
+
             double conversionrate = 112.23;
             double result=amount*conversionrate;
             Converted_Amount.setText(String.valueOf(result));

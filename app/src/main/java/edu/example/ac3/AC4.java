@@ -35,8 +35,8 @@ public class AC4 extends AppCompatActivity {
         for (int i=0 ;i<banks.size();i++) {
             if (banks.get(i).getDistance() != null) {
                 banks_final.add(banks.get(i));
-                banks_final.get(i).setCurr_from_s(currency_from);
-                banks_final.get(i).setCurr_to_s(currency_to);
+                //banks_final.get(i).setCurr_from_s(currency_from);
+                //banks_final.get(i).setCurr_to_s(currency_to);
             }
         }
 /*

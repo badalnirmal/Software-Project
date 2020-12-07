@@ -2,6 +2,8 @@ package edu.example.ac3;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
@@ -71,8 +80,48 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
             int pos = getLayoutPosition();//Try get adapter posittion if dont work
             if(pos!= RecyclerView.NO_POSITION) {
                 Bank1 bank_final= banklist.get(pos);
-                Toast.makeText(context,String.valueOf(banklist.get(pos)),Toast.LENGTH_SHORT).show();
-                Toast.makeText(context,bank_final.getB_name(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,String.valueOf(banklist.get(pos)),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,bank_final.getB_name(),Toast.LENGTH_SHORT).show();
+
+                //Code below is to parse the bank JSON file to get hash-map of currencies and their rates in NRS vs them
+
+                String json= null;
+                try {
+                    InputStream file = context.getAssets().open("12_4.json");
+                    int size = file.available();
+                    byte[] buffer = new byte[size];
+                    file.read(buffer);
+                    file.close();
+                    json = new String(buffer);//new String(buffer,"UTF-8");use this if don't work
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    JSONObject obj = new JSONObject(json);
+                    //the first array below parses the dates thus need to loop over this array for different days
+                    JSONArray m_jArry = obj.getJSONObject("data").getJSONArray("payload");
+                    //the second array below parses the currency rates for the date in the single iteration of array above
+                    JSONArray m_jArry2=m_jArry.getJSONObject(0).getJSONArray("rates");
+
+                    ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
+                    HashMap<String, String> m_li;
+
+                    for (int i = 0; i < m_jArry2.length(); i++) {
+                        JSONObject jo_inside = m_jArry2.getJSONObject(i);
+                        final String iso3 = jo_inside.getJSONObject("currency").getString("iso3");
+                        String rate = jo_inside.getString("buy");
+
+                        //get all the rates for one bank for that day for all five currencies
+                        //base currency is NRS
+                        //all other currencies should be converted to NRS and then converted to other value.
+                        //Add your values in your `ArrayList` as below:
+                        //System.out.println(iso3);
+                        //System.out.println(rate);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(context,AC5.class);
                 intent.putExtra("bank_final",bank_final);
                 context.startActivity(intent);
