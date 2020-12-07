@@ -167,7 +167,7 @@ public class AC3 extends AppCompatActivity {
                     intent.putExtra("curr_from_string",drop_down1_choice[0] );
                     intent.putExtra("curr_to_string", drop_down2_choice[0]);
                     startActivity(intent);
-                    for(int i=0; i<distance.size();i++)
+                    for(int i=0; i<list_of_banks.size();i++)
                     {
                         list_of_banks.get(i).setDistance(distance.get(i).distance_val);
                     }
@@ -263,9 +263,27 @@ public class AC3 extends AppCompatActivity {
                 double lat = Double.parseDouble(hashmaPList.get("lat"));
                 double lng = Double.parseDouble(hashmaPList.get("lng"));
                 String name = hashmaPList.get("name");
-                bank.setB_name(name);
-                bank.setSer_charge(200.00);//Check this value for all banks
-                list_of_banks.add(bank);
+                if(name.contains("Agricultural")) {
+                    bank.setB_name(name);
+                    bank.setSer_charge(200.00);//Check this value for all banks
+                    list_of_banks.add(bank);
+                }
+                if(name.contains("Banijya")) {
+                    bank.setB_name(name);
+                    bank.setSer_charge(500.00);//Check this value for all banks
+                    list_of_banks.add(bank);
+                }
+                if(name.contains("NIC")) {
+                    bank.setB_name(name);
+                    bank.setSer_charge(550.00);//Check this value for all banks
+                    list_of_banks.add(bank);
+                }
+                if(name.contains("Everest Bank")) {
+                    bank.setB_name(name);
+                    bank.setSer_charge(250.00);//Check this value for all banks
+                    list_of_banks.add(bank);
+                }
+
 
                 //Here feed the datas to the bank1 object and then put it in arraylist**************************************************************************************
                 //Or return the received datas back to the line 74**********************************************************************************************************

@@ -29,14 +29,14 @@ public class AC4 extends AppCompatActivity {
         ArrayList<Bank1> banks = (ArrayList<Bank1>) intent.getSerializableExtra("bank object arraylist");
         String currency_from = (String) intent.getSerializableExtra("curr_from_string");
         String currency_to = (String) intent.getSerializableExtra("curr_to_string");
-        ArrayList<Bank1> banks_final = new ArrayList<>();
+        final ArrayList<Bank1> banks_final = new ArrayList<>();
 
         //System.out.println(banks.size());
         for (int i=0 ;i<banks.size();i++) {
             if (banks.get(i).getDistance() != null) {
                 banks_final.add(banks.get(i));
-                //banks_final.get(i).setCurr_from_s(currency_from);
-                //banks_final.get(i).setCurr_to_s(currency_to);
+                banks_final.get(i).setCurr_from_s(currency_from);
+                banks_final.get(i).setCurr_to_s(currency_to);
             }
         }
 /*
@@ -56,10 +56,10 @@ This code is here to test the import from intent as it gets added to the banks_f
 
 */
         System.out.println(banks.size());
-        if(banks.size()!= 0) {
-            RecyclerView rvBanks = findViewById(R.id.list_banks);
+        RecyclerView rvBanks = findViewById(R.id.list_banks);
 
-            BankAdapter adapter = new BankAdapter(banks_final);
+        final BankAdapter adapter = new BankAdapter(banks_final);
+        if(banks.size()!= 0) {
 
             rvBanks.setAdapter(adapter);
             rvBanks.setLayoutManager(new LinearLayoutManager(this));
@@ -89,6 +89,21 @@ This code is here to test the import from intent as it gets added to the banks_f
 
             }
 
+        });
+
+        final Button sort_button = findViewById(R.id.sort_button);
+        sort_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drop_down1_choice[0] == "Service Charge")
+                {
+                    adapter.swapItems(banks_final);
+                }
+                if(drop_down1_choice[0] == "Distance")
+                {
+                    adapter.swapItems(banks_final);
+                }
+            }
         });
 
         final Button go_back_ac3 = findViewById(R.id.go_back_ac3);

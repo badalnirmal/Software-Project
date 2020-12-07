@@ -21,6 +21,7 @@ public class AC5 extends AppCompatActivity {
     private Button Go_Back;
     private Button Return_Homepage;
     private Button Print;
+    private Bank1 bank_final;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +31,15 @@ public class AC5 extends AppCompatActivity {
         Return_Homepage = (Button) findViewById(R.id.return_homepage);
 
         TextView bank_details = findViewById(R.id.bank_details);
-        Bank1 bank_final = (Bank1) getIntent().getSerializableExtra("bank_final");
-        System.out.println(bank_final.getB_name()+" "+bank_final.getCurr_from_s());
-        bank_details.setText(String.format("%s\n%s away.\n%f %s -> %f %s",
+        bank_final = (Bank1) getIntent().getSerializableExtra("bank_final");
+        String from_s = (String) getIntent().getSerializableExtra("from_s");
+        String to_s = (String) getIntent().getSerializableExtra("to_s");
+
+        System.out.println(bank_final.getB_name()+" "+bank_final.getCurr_from() + from_s);
+        bank_details.setText(String.format("%s\n%s away.\n%.2f %s -> %.2f %s",
                 bank_final.getB_name(), bank_final.getDistance(),
-                bank_final.curr_from,bank_final.curr_from_s,
-                bank_final.curr_to,bank_final.curr_to_s));
+                bank_final.curr_from,from_s,
+                bank_final.curr_to,to_s));
 
         //moving back to page 4
         Go_Back.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +66,8 @@ public class AC5 extends AppCompatActivity {
             Converted_Amount = (EditText) findViewById(R.id.converted_amount);
             double amount= parseInt(Amount_to_convert.getText().toString());
 
-            double conversionrate = 112.23;
+            double conversionrate = bank_final.getCurr_to();
+            System.out.println(bank_final.getCurr_to());
             double result=amount*conversionrate;
             Converted_Amount.setText(String.valueOf(result));
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
@@ -62,6 +63,18 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
         return banklist.size();
     }
 
+    public void swapItems(ArrayList<Bank1> contacts) {
+        // compute diffs
+        final ContactDiffCallback diffCallback = new ContactDiffCallback(this.banklist, contacts);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        // clear contacts and add
+        this.banklist.clear();
+        this.banklist.addAll(contacts);
+
+        diffResult.dispatchUpdatesTo(this); // calls adapter's notify methods after diff is computed
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView bankname;
         public Button selectbank;
@@ -80,8 +93,8 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
             int pos = getLayoutPosition();//Try get adapter posittion if dont work
             if(pos!= RecyclerView.NO_POSITION) {
                 Bank1 bank_final= banklist.get(pos);
-                //Toast.makeText(context,String.valueOf(banklist.get(pos)),Toast.LENGTH_SHORT).show();
-                //Toast.makeText(context,bank_final.getB_name(),Toast.LENGTH_SHORT).show();
+
+                String USD = null,GBP = null,CNY = null ,EUR=null;
 
                 //Code below is to parse the bank JSON file to get hash-map of currencies and their rates in NRS vs them
 
@@ -114,16 +127,174 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
                         //get all the rates for one bank for that day for all five currencies
                         //base currency is NRS
                         //all other currencies should be converted to NRS and then converted to other value.
-                        //Add your values in your `ArrayList` as below:
-                        //System.out.println(iso3);
-                        //System.out.println(rate);
 
+
+                        if(iso3.equals("GBP"))
+                            GBP=rate;
+                        else if (iso3.equals("USD"))
+                            USD=rate;
+                        else if (iso3.equals("EUR"))
+                            EUR=rate;
+                        else if (iso3.equals("CNY"))
+                            CNY=rate;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                //When From is NRS and to is other currencies
+                if(bank_final.getCurr_from_s().equals("NRS"))
+                {
+                    if(bank_final.getCurr_to_s().equals("EUR"))
+                    {
+                        bank_final.setCurr_to(1/Double.parseDouble(EUR)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("USD"))
+                    {
+                        bank_final.setCurr_to(1/Double.parseDouble(USD)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("GBP"))
+                    {
+                        bank_final.setCurr_to(1/Double.parseDouble(GBP)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("CNY"))
+                    {
+                        bank_final.setCurr_to(1/Double.parseDouble(CNY)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                }
+
+                //When from is Euro and to is other currencies
+                if(bank_final.getCurr_from_s().equals("EUR"))
+                {
+                    double rate = Double.parseDouble(EUR);
+                    if(bank_final.getCurr_to_s().equals("NRS"))
+                    {
+                        bank_final.setCurr_to(rate) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("USD"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(USD) ) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("GBP"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(GBP) ) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("CNY"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(CNY)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                }
+                //When from is USD and to is other currencies
+                if(bank_final.getCurr_from_s().equals("USD"))
+                {
+                    double rate = Double.parseDouble(USD);
+                    if(bank_final.getCurr_to_s().equals("NRS"))
+                    {
+                        bank_final.setCurr_to(rate) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("EUR"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(EUR) ) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("GBP"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(GBP)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("CNY"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(CNY)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                }
+                //When from is Chinese Yuan and to is other currencies
+                if(bank_final.getCurr_from_s().equals("CNY"))
+                {
+                    double rate = Double.parseDouble(CNY);
+                    if(bank_final.getCurr_to_s().equals("NRS"))
+                    {
+                        bank_final.setCurr_to(rate) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("EUR"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(EUR) ) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("GBP"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(GBP)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("USD"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(USD) ) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                }
+
+                //When from is Great Britian Pound and to is other currencies
+                if(bank_final.getCurr_from_s().equals("GBP"))
+                {
+                    double rate = Double.parseDouble(GBP);
+                    if(bank_final.getCurr_to_s().equals("NRS"))
+                    {
+                        bank_final.setCurr_to(rate) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("EUR"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(EUR)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("USD"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(USD)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                    if(bank_final.getCurr_to_s().equals("CNY"))
+                    {
+                        bank_final.setCurr_to(rate/Double.parseDouble(CNY)) ;
+                        bank_final.setCurr_from(1.0);
+
+                    }
+                }
+
+                //System.out.println(bank_final.getCurr_from_s() +" "+bank_final.getCurr_from() +"->"+  bank_final.getCurr_to_s() + " "+bank_final.getCurr_to());
+
                 Intent intent = new Intent(context,AC5.class);
                 intent.putExtra("bank_final",bank_final);
+                intent.putExtra("from_s",bank_final.curr_from_s);
+                intent.putExtra("to_s",bank_final.curr_to_s);
                 context.startActivity(intent);
             }
 
