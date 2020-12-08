@@ -36,16 +36,18 @@ public class AC5 extends AppCompatActivity {
         String to_s = (String) getIntent().getSerializableExtra("to_s");
 
         //System.out.println(bank_final.getB_name()+" "+bank_final.getCurr_from() + from_s);
-        bank_details.setText(String.format("%s\n%s away.\n%.2f %s -> %.2f %s",
+        bank_details.setText(String.format("%s\n%s km away.\n%.2f %s -> %.2f %s\nService Charge: %s\n\n",
                 bank_final.getB_name(), bank_final.getDistance(),
                 bank_final.curr_from,from_s,
-                bank_final.curr_to,to_s));
+                bank_final.curr_to,to_s,
+                bank_final.getSer_charge()));
 
         //moving back to page 4
         Go_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AC5.this, AC4.class);
+
                 startActivity(intent);
             }
         });
@@ -69,7 +71,7 @@ public class AC5 extends AppCompatActivity {
             double conversionrate = bank_final.getCurr_to();
             //System.out.println(bank_final.getCurr_to());
             double result=amount*conversionrate;
-            Converted_Amount.setText(String.valueOf(result));
+            Converted_Amount.setText(String.format("%.2f",result));
 
         }catch(Exception e){
             e.printStackTrace();

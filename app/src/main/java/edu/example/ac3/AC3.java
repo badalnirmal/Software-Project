@@ -169,7 +169,10 @@ public class AC3 extends AppCompatActivity {
                     startActivity(intent);
                     for(int i=0; i<list_of_banks.size();i++)
                     {
-                        list_of_banks.get(i).setDistance(distance.get(i).distance_val);
+                        String distance_num_val = distance.get(i).distance_val;
+                        String[] num = distance_num_val.split(" ");
+                        //System.out.println(num[0]);
+                        list_of_banks.get(i).setDistance(num[0]);
                     }
                     //System.out.println(distance.size());
                     //System.out.println(list_of_banks.size());

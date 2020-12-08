@@ -33,7 +33,7 @@ public class AC4 extends AppCompatActivity {
         final ArrayList<Bank1> banks_final = new ArrayList<>();
 
         //System.out.println(banks.size());
-        for (int i=0 ;i<banks.size();i++) {
+        for (int i=0 ;banks.size()!=0 && i<banks.size() ;i++) {
             if (banks.get(i).getDistance() != null) {
                 banks_final.add(banks.get(i));
                 banks_final.get(i).setCurr_from_s(currency_from);
@@ -41,10 +41,8 @@ public class AC4 extends AppCompatActivity {
             }
         }
 
-        QuickSort qsu = new QuickSort(banks_final);
-        qsu.startQuickStart(0, banks_final.size()-1);
-/*
-This code is here to test the import from intent as it gets added to the banks_final array
+        /*
+        //This code is here to test the import from intent as it gets added to the banks_final array
         System.out.println(banks_final.size());
         for (int i=0 ;i<banks_final.size();i++)
         {
@@ -58,8 +56,11 @@ This code is here to test the import from intent as it gets added to the banks_f
         }
 
 
-*/
         //System.out.println(banks.size());
+        */
+        QuickSort qsu = new QuickSort(banks_final);
+        qsu.startQuickStart(0, banks_final.size()-1);
+
         RecyclerView rvBanks = findViewById(R.id.list_banks);
 
         final BankAdapter adapter = new BankAdapter(banks_final);
@@ -101,11 +102,13 @@ This code is here to test the import from intent as it gets added to the banks_f
             public void onClick(View v) {
                 if(drop_down1_choice[0] == "Service Charge")
                 {
-                    adapter.swapItems(banks_final);
+                    QuickSort qsu = new QuickSort(banks_final);
+                    qsu.startQuickStart(0, banks_final.size()-1);
                 }
                 if(drop_down1_choice[0] == "Distance")
                 {
-                    adapter.swapItems(banks_final);
+                    QuickSort qsu = new QuickSort(banks_final);
+                    qsu.startQuickStart(0, banks_final.size()-1);
                 }
             }
         });
@@ -150,16 +153,16 @@ This code is here to test the import from intent as it gets added to the banks_f
 
             Random r = new Random();
             int pivotIndex = nextIntInRange(start,end,r);
-            double pivot = inputArray.get(pivotIndex).getSer_charge();
+            double pivot = Double.parseDouble(inputArray.get(pivotIndex).getDistance());
 
             //System.out.println("Pivot Element "+pivot+" at index:"+pivotIndex);
 
             while(true){
-                while(inputArray.get(length).getSer_charge() > pivot && length>start){
+                while(Double.parseDouble(inputArray.get(length).getDistance()) > pivot && length>start){
                     length--;
                 }
 
-                while(inputArray.get(length).getSer_charge() < pivot && init<end){
+                while(Double.parseDouble(inputArray.get(length).getDistance())< pivot && init<end){
                     init++;
                 }
 

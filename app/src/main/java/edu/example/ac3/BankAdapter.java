@@ -47,7 +47,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder>{
         Bank1 bank = banklist.get(position);
 
         TextView textView = holder.bankname;
-        textView.setText(String.format("%s\n%s away. \nService Charge: NRS.%s\n", bank.getB_name(), bank.getDistance(),bank.getSer_charge()));
+        textView.setText(String.format("%s\n%s km away. \nService Charge: NRS.%s\n", bank.getB_name(), bank.getDistance(),bank.getSer_charge()));
 
     }
 
